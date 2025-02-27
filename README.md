@@ -21,7 +21,7 @@ O **MeioAuto** é uma ferramenta desenvolvida em Python para extração automát
    ```
 2. Acesse a pasta do projeto:
    ```bash
-   cd meioauto
+   cd autoloc
    ```
 3. Crie e ative um ambiente virtual:
    ```bash
