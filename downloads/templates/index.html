@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeioAuto - Extrator de Códigos de Barras</title>
+    <style>
+        :root {
+            --primary-color: #1a4b8c;
+            --secondary-color: #0099ff;
+            --text-color: #333;
+            --text-light: #666;
+            --bg-color: #ffffff;
+            --border-color: #e5e5e5;
+            --header-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-color);
+        }
+
+        .header {
+            background-color: #fff;
+            height: var(--header-height);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 5px;
+            border: 2px solid var(--primary-color);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .header-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            margin-left: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0d3b76;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            background-color: transparent;
+        }
+
+        .btn-outline:hover {
+            background-color: #f5f5f5;
+        }
+
+        .search-icon {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: calc(var(--header-height) + 30px) auto 40px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .main-article {
+            background-color: #fff;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .article-title {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .article-content {
+            padding: 30px;
+        }
+
+        .article-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: var(--text-color);
+        }
+
+        .features-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin: 30px 0 15px;
+        }
+
+        .features-list {
+            margin-bottom: 30px;
+        }
+
+        .features-list li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 25px;
+            list-style-type: none;
+        }
+
+        .features-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+
+        .download-btn:hover {
+            background-color: #0d3b76;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-section {
+            background-color: #fff;
+            border-radius: 4px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-content {
+            font-size: 0.95rem;
+        }
+
+        .sidebar-list {
+            list-style: none;
+        }
+
+        .sidebar-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-list li:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-list a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .sidebar-list a:hover {
+            color: var(--secondary-color);
+        }
+
+        .footer {
+            background-color: #f5f5f5;
+            padding: 30px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .footer p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .header-container {
+                padding: 0 10px;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .article-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        .instructions-list {
+            margin-bottom: 25px;
+            padding-left: 25px;
+        }
+
+        .instructions-list li {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .instructions-note {
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">M</div>
+                MeioAuto
+            </a>
+            <ul class="nav-links">
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Recursos</a></li>
+                <li><a href="#">Documentação</a></li>
+                <li><a href="#">Suporte</a></li>
+            </ul>
+            <div class="header-buttons">
+                <div class="search-icon">🔍</div>
+                <a href="{% url 'download_zip' %}" class="btn btn-primary">DOWNLOAD</a>
+                <a href="https://www.linkedin.com/in/deyvidmarques/" class="btn btn-outline" target="_blank">CONTATO</a>
+
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="main-article">
+            <div class="article-content">
+                <h1 class="article-title">DARF - Extrair Código de Barras</h1>
+                <div class="article-meta">
+                    Desenvolvido por DVD • Atualizado em 27/02/2025
+                </div>
+                <p class="article-text">
+                    O <strong>MeioAuto</strong> é uma solução automatizada para extrair códigos de barras de documentos DARF em formato PDF.
+                    O sistema gera um novo arquivo PDF contendo os valores extraídos, facilitando o processamento e organização dos seus documentos fiscais.
+                </p>
+                <p class="article-text">
+                    Com monitoramento contínuo da pasta "pdfs", o sistema processa automaticamente novos arquivos assim que são adicionados,
+                    eliminando a necessidade de intervenção manual e aumentando significativamente sua produtividade.
+                </p>
+
+                <h2 class="features-title">Tecnologias utilizadas</h2>
+                <ul class="features-list">
+                    <li><strong>PyMuPDF</strong> - Biblioteca poderosa para manipulação de documentos PDF, permitindo a extração precisa de informações.</li>
+                    <li><strong>ReportLab</strong> - Framework para geração de PDFs personalizados com alta qualidade e formatação profissional.</li>
+                    <li><strong>Watchdog</strong> - Sistema de monitoramento em tempo real que detecta alterações em diretórios e arquivos.</li>
+                    <li><strong>Expressões Regulares</strong> - Técnica avançada para identificação e extração de padrões específicos nos documentos.</li>
+                </ul>
+
+                <h2 class="features-title">Como utilizar o MeioAuto</h2>
+                <ol class="instructions-list">
+                    <li>Após realizar o download da ferramenta, extraia o conteúdo do arquivo ZIP para uma pasta de sua preferência.</li>
+                    <li>Navegue até a pasta "dist" e localize o arquivo executável denominado "codigo".</li>
+                    <li>Execute o arquivo "codigo". Caso seu sistema operacional exiba um aviso de segurança, selecione "Mais informações" e em seguida "Executar mesmo assim".</li>
+                    <li>Aguarde até que a mensagem "Aguardando novos arquivos" seja exibida na janela do programa.</li>
+                    <li>Insira todos os arquivos DARF que deseja processar na pasta "pdfs" de uma só vez.</li>
+                    <li>O sistema processará automaticamente os arquivos. Após a conclusão, dirija-se à pasta "arquivo" para visualizar o PDF gerado com os códigos de barras extraídos.</li>
+                </ol>
+                <p class="instructions-note">Observação: O MeioAuto continuará monitorando a pasta "pdfs" para novos arquivos. Para encerrar o programa, feche a janela do executável.</p>
+
+                <a href="{% url 'download_zip' %}" class="download-btn">Download</a>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Você viu?</h3>
+                <ul class="sidebar-list">
+                    <li><a href="#">Como automatizar a extração de dados de documentos fiscais</a></li>
+                    <li><a href="#">5 dicas para otimizar o processamento de DARFs</a></li>
+                    <li><a href="#">Novidades na versão 2.0 do MeioAuto</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Recursos</h3>
+                <div class="sidebar-content">
+                    <p>Acesse nossa documentação completa e tutoriais para aproveitar ao máximo o MeioAuto.</p>
+                    <ul class="sidebar-list">
+                        <li><a href="#">Guia de instalação</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Exemplos de uso</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2025 MeioAuto - Todos os direitos reservados</p>
+        </div>
+    </footer>
+</body>
+
+</html>
