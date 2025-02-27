@@ -46,6 +46,7 @@ O **MeioAuto** é uma ferramenta desenvolvida em Python para extração automát
 4. Aguarde até que a mensagem **"Aguardando novos arquivos"** seja exibida na janela do programa. ⏳
 5. Insira todos os arquivos **DARF** que deseja processar na pasta **"pdfs"** de uma só vez.
 6. O sistema processará automaticamente os arquivos. Após a conclusão, dirija-se à pasta **"arquivo"** para visualizar o PDF gerado com os códigos de barras extraídos. ✅
+
 ***Observação:** O **MeioAuto** continuará monitorando a pasta **"pdfs"** para novos arquivos. Para encerrar o programa, feche a janela do executável.*
 
 ## 📩 Contribuições
