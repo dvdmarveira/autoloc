@@ -17,7 +17,7 @@ O **MeioAuto** é uma ferramenta desenvolvida em Python para extração automát
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/meioauto.git
+   git clone https://github.com/dvdmarveira/meioauto.git
    ```
 2. Acesse a pasta do projeto:
    ```bash
